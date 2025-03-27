@@ -1,0 +1,834 @@
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عطر</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&family=Readex+Pro:wght@160..700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Rubik", sans-serif;
+            background: linear-gradient(135deg, #f4e1c8 0%, #d4a57b 50%, #a67b5b 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* الهيدر */
+        .header {
+            background: linear-gradient(90deg, #8b5a2b, #5a3e1b);
+            color: white;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .header .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .header .logo-img {
+            width: 85px;
+            height: 85px;
+            transition: transform 0.3s ease;
+        }
+
+        /* عرض المنتج */
+        .product-card {
+            background: #fff;
+            padding: 12px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.4s ease;
+            margin: 10px 0;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        .product-card img {
+            max-width: 300px;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+        .product-card img:hover {
+            transform: scale(1.08);
+        }
+        .product-card p {
+            font-size: 20px;
+            color: #5a3e1b;
+            margin: 12px 0;
+            font-weight: 600;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .feature-item {
+            background: rgba(139, 90, 43, 0.1);
+            color: #5a3e1b;
+            font-size: 14px;
+            padding: 6px 12px;
+            border: 1px solid #d9c2a7;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        .feature-item:hover {
+            background: rgba(139, 90, 43, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .add-to-cart {
+            background: #5a3e1b;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .add-to-cart:hover {
+            background: #8b5a2b;
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* النموذج */
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin: 30px 0;
+        }
+        .forms_head {
+            font-size: 30px;
+            color: #8b5a2b;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            animation: fadeIn 1s ease;
+        }
+        .forms_head::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background: #8b5a2b;
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+        }
+
+        /* تصميم الحقول */
+        .form-item {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .form-item label {
+            font-weight: bold;
+            color: #5a3e1b;
+            font-size: 16px;
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: #fff;
+            padding: 0 5px;
+            transition: all 0.3s ease;
+        }
+        .form-item input, .form-item select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #d9c2a7;
+            border-radius: 10px;
+            font-size: 16px;
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+        .form-item input:focus, .form-item select:focus {
+            border-color: #8b5a2b;
+            box-shadow: 0 0 12px rgba(139, 90, 43, 0.2);
+            outline: none;
+        }
+        .form-item input:focus + label, .form-item select:focus + label {
+            color: #8b5a2b;
+            top: -15px;
+            font-size: 14px;
+        }
+
+        /* حقل الجوال المخصص */
+        .phone-container {
+            display: flex;
+            border: 0px solid #d9c2a7;
+            border-radius: 10px;
+        }
+        .phone-container:focus-within {
+        }
+        .phone-prefix {
+            padding: 10px;
+        }
+        .phone-input {
+            flex: 1;
+            padding: 5px;
+            text-align: left; /* محاذاة النص إلى اليسار */
+        }
+        .error-message {
+            font-size: 14px;
+            color: #d9534f;
+            background: rgba(217, 83, 79, 0.1);
+            padding: 8px 12px;
+            border-radius: 15px;
+            display: none;
+            margin-top: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* تنبيه عصري */
+        .modern-note {
+            font-size: 14px;
+            color: #8b5a2b;
+            background: rgba(139, 90, 43, 0.1);
+            padding: 8px 12px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 5px;
+            transition: all 0.3s ease;
+        }
+        .modern-note:hover {
+            background: rgba(139, 90, 43, 0.2);
+        }
+
+        /* تصميم الاختيار */
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        .custom-select select {
+            display: none;
+        }
+        .select-selected {
+            background: #fafafa;
+            padding: 15px;
+            border: 2px solid #d9c2a7;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #5a3e1b;
+            transition: all 0.3s ease;
+        }
+        .select-selected:hover {
+            border-color: #8b5a2b;
+        }
+        .select-items {
+            position: absolute;
+            background: #fff;
+            border: 2px solid #d9c2a7;
+            border-radius: 10px;
+            width: 100%;
+            z-index: 99;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .select-items div {
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .select-items div:hover {
+            background: #8b5a2b;
+            color: white;
+        }
+        .select-show {
+            display: block;
+        }
+
+        /* حقل طريقة الدفع */
+        .payment-methods {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px;
+            border: 2px solid #d9c2a7;
+            border-radius: 10px;
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+        .payment-methods:focus-within {
+            border-color: #8b5a2b;
+            box-shadow: 0 0 12px rgba(139, 90, 43, 0.2);
+        }
+        .payment-option {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .payment-option:hover, .payment-option.selected {
+            background: #f9e8d9;
+            box-shadow: 0 5px 15px rgba(139, 90, 43, 0.2);
+        }
+        .payment-option.selected .cost {
+            background: #8b5a2b;
+            color: white;
+        }
+        .payment-option img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 5px;
+            border-radius: 10px;
+        }
+        .payment-option p {
+            font-size: 14px;
+            color: #5a3e1b;
+            margin: 5px 0;
+        }
+        .payment-option .cost {
+            font-size: 12px;
+            color: #8b5a2b;
+            font-weight: bold;
+            background: #fff;
+            padding: 3px 8px;
+            border-radius: 15px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .payment-option:hover .cost {
+            background: #8b5a2b;
+            color: white;
+        }
+
+        /* زر الإرسال */
+        .btn-primary {
+            background: #8b5a2b;
+            border: none;
+            padding: 15px 30px;
+            color: white;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.4s ease;
+        }
+        .btn-primary:hover {
+            background: #5a3e1b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* رسالة النجاح */
+        .success-message {
+            text-align: center;
+            padding: 50px 20px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+        .success-message i {
+            font-size: 60px;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        .success-message p {
+            font-size: 24px;
+            color: #5a3e1b;
+            font-weight: 600;
+        }
+
+        /* الفوتر */
+        .footer {
+            background: #5a3e1b;
+            color: white;
+            padding: 3px 0;
+            text-align: center;
+            margin-top: 3px;
+        }
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .footer-logo-img {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+        .footer-logo-img:hover {
+            transform: scale(1.1);
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .footer-links a {
+            color: #5a3e1b;
+            font-size: 18px;
+            text-decoration: none;
+            padding: 10px 25px;
+            background: #d4a57b;
+            border-radius: 15px;
+            transition: all 0.4s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .footer-links a:hover {
+            background: #f9e8d9;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .social-icons {
+            margin: 25px 0;
+        }
+        .social-icons a {
+            color: #f9e8d9;
+            font-size: 24px;
+            margin: 0 15px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .social-icons a:hover {
+            transform: scale(1.2);
+            color: #fff;
+        }
+        .footer-images {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .footer-images img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            object-fit: cover;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .footer-images img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* التحريك */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            .product-card p { font-size: 18px; }
+            .forms_head { font-size: 26px; }
+            .btn-primary { font-size: 16px; }
+            .footer-links { flex-direction: column; gap: 15px; }
+            .footer-links a { width: 180px; font-size: 16px; }
+            .footer-images { gap: 10px; }
+            .social-icons a { font-size: 20px; margin: 0 10px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- الهيدر -->
+    <div class="header">
+        <div class="container">
+            <div class="logo-container">
+                <img src="http://i.imgur.com/FeDO60W.png" alt="الشعار" class="logo-img">
+            </div>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="container marketing">
+        <section class="content">
+            <div class="product-card">
+                <img alt="عرض براون" src="http://i.imgur.com/R5LeAyQ.jpeg" style="width: 250px; height: 251px;">
+                <p>عطر براون | BRAWN</p>
+                <div class="features">
+                    <span class="feature-item">أسرع طلب</span>
+                    <span class="feature-item">100 ملي بأقل سعر</span>
+                    <span class="feature-item">شحن وتوصيل مجاني</span>
+                </div>
+                <div class="features">
+                    <span class="feature-item">الدفع عند الاستلام</span>
+                    <span class="feature-item">استرجاع فوري</span>
+                    <span class="feature-item">جميع مدن المملكة</span>
+                </div>
+                <button class="add-to-cart" onclick="scrollToForm()">اطلب الان</button>
+            </div>
+
+            <!-- نموذج الطلب -->
+            <div class="form-container" id="order-form">
+                <form enctype="multipart/form-data" action="https://submit.jotform.com/submit/242456296001048" method="post" id="form-211-form" accept-charset="UTF-8">
+                    <input type="hidden" name="formID" value="242456296001048">
+                    <input type="hidden" id="JWTContainer" value="">
+                    <input type="hidden" id="cardinalOrderNumber" value="">
+                    <input type="hidden" id="jsExecutionTracker" name="jsExecutionTracker" value="build-date-1742289551535=>init-started:1742289580578=>validator-called:1742289580583=>validator-mounted-false:1742289580583=>init-complete:1742289580585=>interval-complete:1742289601608">
+                    <input type="hidden" id="submitSource" name="submitSource" value="mounted">
+                    <input type="hidden" id="buildDate" name="buildDate" value="1742289551535">
+                    <input type="hidden" name="uploadServerUrl" value="https://upload.jotform.com/upload">
+                    <input type="hidden" name="eventObserver" value="1">
+
+                    <div class="forms_head">إتمام الطلب</div>
+                    <div class="form-item">
+                        <input type="text" id="edit-name" name="q19_input19" required="">
+                        <label for="edit-name">الإسم <span class="form-required">*</span></label>
+                    </div>
+                    <div class="form-item">
+                        <div class="phone-container">
+                            <input type="text" id="edit-mob" name="q20_input20" class="phone-input" required="" maxlength="9" pattern="[0-9]*" inputmode="numeric">
+                            <span class="phone-prefix">966+</span>
+                        </div>
+                        <label for="edit-mob">الجوال <span class="form-required">*</span></label>
+                        <div class="modern-note">سوف نتواصل معك على الواتس آب مباشرة</div>
+                        <div class="error-message" id="phone-error">تأكد من الرقم</div>
+                    </div>
+                    <div class="form-item">
+                        <input type="text" id="edit-city" name="q24_input24" required="">
+                        <label for="edit-city">المدينة <span class="form-required">*</span></label>
+                    </div>
+                    <div class="form-item custom-select">
+                        <select id="edit-prodsamount" name="prodsAmount" required="">
+                            <option value="1" selected="">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <div class="select-selected">1</div>
+                        <div class="select-items">
+                            <div>1</div>
+                            <div>2</div>
+                            <div>3</div>
+                            <div>4</div>
+                            <div>5</div>
+                        </div>
+                        <label for="edit-prodsamount">الكمية <span class="form-required">*</span></label>
+                        <input type="hidden" id="input_25" name="q25_input25" value="1">
+                    </div>
+                    <div class="form-item">
+                        <label for="payment-method">طريقة الدفع <span class="form-required">*</span></label>
+                        <div class="payment-methods">
+                            <div class="payment-option selected" onclick="selectPayment(this)" data-value="cash">
+                                <img src="http://i.imgur.com/5wT3r9N.jpeg" alt="الدفع عند الاستلام">
+                                <p>الدفع عند الاستلام</p>
+                                <div class="cost">0 ريال</div>
+                            </div>
+                            <div class="payment-option" onclick="selectPayment(this)" data-value="bank">
+                                <img src="http://i.imgur.com/dBciLgh.png" alt="تحويل بنكي">
+                                <p>تحويل بنكي</p>
+                            </div>
+                        </div>
+                        <input type="hidden" id="input_26" name="q26_input26" value="الدفع عند الاستلام">
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="إتمام الطلب">
+                </form>
+            </div>
+
+            <!-- مربعات التقييم -->
+            <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+                <div style="background: #fff; padding: 15px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); text-align: center; width: 150px; transition: all 0.3s ease;">
+                    <p style="font-size: 16px; color: #5a3e1b; font-weight: 600; margin-bottom: 5px;">أم عبدالله</p>
+                    <div style="color: #f1c40f; margin-bottom: 5px;">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-size: 14px; color: #8b5a2b;">فخامة العطر من الآخر</p>
+                </div>
+                <div style="background: #fff; padding: 15px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); text-align: center; width: 150px; transition: all 0.3s ease;">
+                    <p style="font-size: 16px; color: #5a3e1b; font-weight: 600; margin-bottom: 5px;">ماجد الحارثي</p>
+                    <div style="color: #f1c40f; margin-bottom: 5px;">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-size: 14px; color: #8b5a2b;">شكراً على المصداقية منتج ممتاز</p>
+                </div>
+                <div style="background: #fff; padding: 15px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); text-align: center; width: 150px; transition: all 0.3s ease;">
+                    <p style="font-size: 16px; color: #5a3e1b; font-weight: 600; margin-bottom: 5px;">ندى</p>
+                    <div style="color: #f1c40f; margin-bottom: 5px;">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-size: 14px; color: #8b5a2b;">رهيب العطر مقابل السعر</p>
+                </div>
+                <div style="background: #fff; padding: 15px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); text-align: center; width: 150px; transition: all 0.3s ease;">
+                    <p style="font-size: 16px; color: #5a3e1b; font-weight: 600; margin-bottom: 5px;">نورة</p>
+                    <div style="color: #f1c40f; margin-bottom: 5px;">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-size: 14px; color: #8b5a2b;">سعره ورائحة روووعة</p>
+                </div>
+                <div style="background: #fff; padding: 15px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); text-align: center; width: 150px; transition: all 0.3s ease;">
+                    <p style="font-size: 16px; color: #5a3e1b; font-weight: 600; margin-bottom: 5px;">سارة علي</p>
+                    <div style="color: #f1c40f; margin-bottom: 5px;">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-size: 14px; color: #8b5a2b;">التعامل راقي جداً </p>
+                </div>
+                <div style="background: #fff; padding: 15px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); text-align: center; width: 150px; transition: all 0.3s ease;">
+                    <p style="font-size: 16px; color: #5a3e1b; font-weight: 600; margin-bottom: 5px;">شعاع</p>
+                    <div style="color: #f1c40f; margin-bottom: 5px;">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-size: 14px; color: #8b5a2b;">منتج لايعلى عليه</p>
+                </div>
+            </div>
+            <!-- نص "والمزيد..." -->
+            <div style="text-align: center; margin-top: 10px;">
+                <span style="font-size: 14px; color: #5a3e1b; background: #fff; padding: 8px 12px; border-radius: 15px; display: inline-block; transition: all 0.3s ease;">والمزيد...</span>
+            </div>
+        </section>
+    </div>
+
+    <!-- الفوتر -->
+    <div class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <img src="http://i.imgur.com/FeDO60W.png" alt="شعار العمودي" class="footer-logo-img">
+                <p>جميع الحقوق محفوظة لـ عطور براون © 2025</p>
+            </div>
+            <div class="footer-links">
+                <a href="/affiliate">التسويق بالعمولة</a>
+                <a href="/contact">تواصل معنا</a>
+                <a href="/return">استرجاع العطر</a>
+            </div>
+            <div class="social-icons">
+                <a target="_blank"><i class="fab fa-twitter"></i></a>
+                <a target="_blank"><i class="fab fa-snapchat"></i></a>
+                <a target="_blank"><i class="fab fa-instagram"></i></a>
+            </div>
+            <div class="footer-images">
+                <img src="http://i.imgur.com/AZJ9EoU.png" alt="صورة 1">
+                <img src="http://i.imgur.com/R5u17fh.jpeg" alt="صورة 2">
+                <img src="http://i.imgur.com/dBciLgh.png" alt="صورة 3">
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.querySelectorAll('.custom-select').forEach(select => {
+            const selected = select.querySelector('.select-selected');
+            const items = select.querySelector('.select-items');
+            const originalSelect = select.querySelector('select');
+
+            selected.addEventListener('click', () => {
+                items.classList.toggle('select-show');
+            });
+
+            items.querySelectorAll('div').forEach(item => {
+                item.addEventListener('click', () => {
+                    selected.textContent = item.textContent;
+                    originalSelect.value = item.textContent;
+                    items.classList.remove('select-show');
+                    document.getElementById('input_25').value = item.textContent; // تحديث حقل الكمية
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!select.contains(e.target)) {
+                    items.classList.remove('select-show');
+                }
+            });
+        });
+
+        function scrollToForm() {
+            document.getElementById('order-form').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectPayment(element) {
+            document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            const value = element.getAttribute('data-value');
+            document.getElementById('input_26').value = value === 'cash' ? 'الدفع عند الاستلام' : 'تحويل بنكي';
+        }
+
+        // دالة لإنشاء معرف عشوائي فريد لكل شخص
+        function generateUniqueId() {
+            let uniqueId = localStorage.getItem('userUniqueId');
+            if (!uniqueId) {
+                uniqueId = 'user_' + Math.random().toString(36).substr(2, 9); // معرف عشوائي
+                localStorage.setItem('userUniqueId', uniqueId);
+            }
+            return uniqueId;
+        }
+
+        // دالة للتحقق من الحد الأقصى للطلبات بناءً على المعرف العشوائي ورقم الهاتف
+        function checkRequestLimit(uniqueId, phoneNumber) {
+            const currentTime = Date.now();
+            const twoHours = 2 * 60 * 60 * 1000; // ساعتين بالمللي ثانية
+            
+            // مفاتيح التخزين للمعرف العشوائي ورقم الهاتف
+            const idStorageKey = `requestData_id_${uniqueId}`;
+            const phoneStorageKey = `requestData_phone_${phoneNumber}`;
+            
+            // استرجاع بيانات المعرف العشوائي
+            let idData = JSON.parse(localStorage.getItem(idStorageKey)) || {
+                count: 0,
+                lastRequestTime: 0
+            };
+            
+            // استرجاع بيانات رقم الهاتف
+            let phoneData = JSON.parse(localStorage.getItem(phoneStorageKey)) || {
+                count: 0,
+                lastRequestTime: 0
+            };
+
+            // التحقق من المعرف العشوائي: إذا مرت ساعتين، إعادة تعيين
+            if (currentTime - idData.lastRequestTime >= twoHours) {
+                idData = { count: 0, lastRequestTime: 0 };
+            }
+            
+            // التحقق من رقم الهاتف: إذا مرت ساعتين، إعادة تعيين
+            if (currentTime - phoneData.lastRequestTime >= twoHours) {
+                phoneData = { count: 0, lastRequestTime: 0 };
+            }
+
+            // التحقق من الحد الأقصى (1 طلب فقط لكل من المعرف أو الهاتف)
+            if (idData.count >= 1 || phoneData.count >= 1) {
+                return false; // تم الوصول إلى الحد الأقصى للمعرف أو الهاتف
+            }
+
+            // تحديث البيانات بعد السماح بالطلب
+            idData.count = 1;
+            idData.lastRequestTime = currentTime;
+            phoneData.count = 1;
+            phoneData.lastRequestTime = currentTime;
+
+            localStorage.setItem(idStorageKey, JSON.stringify(idData));
+            localStorage.setItem(phoneStorageKey, JSON.stringify(phoneData));
+            return true; // يمكن الإرسال
+        }
+
+        // دالة لعرض رسالة "تم الوصول إلى الحد الأقصى"
+        function showLimitReachedMessage() {
+            const formContainer = document.getElementById('order-form');
+            formContainer.innerHTML = `
+                <div class="success-message">
+                    <i class="fas fa-exclamation-circle" style="color: #d9534f;"></i>
+                    <p>تم الطلب مسبقاً</p>
+                    <h4>يمكنك الطلب غداً</h4>
+                </div>
+            `;
+        }
+
+        // التحقق من حقل الجوال
+        const phoneInput = document.getElementById('edit-mob');
+        const phoneError = document.getElementById('phone-error');
+        const form = document.getElementById('form-211-form');
+        const formContainer = document.getElementById('order-form');
+
+        phoneInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            if (this.value.length > 0 && this.value[0] !== '5') {
+                phoneError.textContent = 'يجب أن يبدأ الرقم بـ 5';
+                phoneError.style.display = 'block';
+            } else if (this.value.length !== 9) {
+                phoneError.textContent = 'تأكد من الرقم (يجب أن يكون 9 أرقام)';
+                phoneError.style.display = 'block';
+            } else {
+                phoneError.style.display = 'none';
+            }
+            if (this.value.length > 9) {
+                this.value = this.value.slice(0, 9);
+            }
+        });
+
+        // حدث إرسال النموذج
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const phoneInputValue = phoneInput.value;
+            const uniqueId = generateUniqueId();
+
+            // التحقق من صحة رقم الجوال
+            if (phoneInputValue.length !== 9 || phoneInputValue[0] !== '5') {
+                if (phoneInputValue[0] !== '5') {
+                    phoneError.textContent = 'يجب أن يبدأ الرقم بـ 5';
+                } else {
+                    phoneError.textContent = 'تأكد من الرقم (يجب أن يكون 9 أرقام)';
+                }
+                phoneError.style.display = 'block';
+                return;
+            }
+
+            // التحقق من الحد الأقصى للطلبات بناءً على المعرف العشوائي ورقم الهاتف
+            if (!checkRequestLimit(uniqueId, phoneInputValue)) {
+                showLimitReachedMessage();
+                return;
+            }
+
+            // إرسال النموذج إذا كان كل شيء صحيحًا
+            phoneError.style.display = 'none';
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+            })
+            .then(response => {
+                if (response.ok) {
+                    localStorage.setItem('lastPhoneNumber', phoneInputValue); // تخزين رقم الهاتف الأخير
+                    formContainer.innerHTML = `
+                        <div class="success-message">
+                            <i class="fas fa-check-circle"></i>
+                            <p>تم الطلب بنجاح</p>
+                            <h4>سوف تصلك رسالة على الواتس آب</h4>
+                        </div>
+                    `;
+                } else {
+                    phoneError.textContent = 'فشل في إرسال النموذج، حاول مرة أخرى';
+                    phoneError.style.display = 'block';
+                    console.error('فشل في إرسال النموذج:', response.statusText);
+                }
+            })
+            .catch(error => {
+                phoneError.textContent = 'حدث خطأ، حاول مرة أخرى';
+                phoneError.style.display = 'block';
+                console.error('خطأ في إرسال النموذج:', error);
+            });
+        });
+    </script>
+</body>
+</html>
