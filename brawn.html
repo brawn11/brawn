@@ -2,19 +2,29 @@
 <html lang="ar" dir="rtl">
 <head>
 
-    <!-- Snap Pixel Code -->
-    <script type='text/javascript'>
-    (function(e,t,n){if(e.snaptr)return;var a=e.snaptr=function()
-    {a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)};
-    a.queue=[];var s='script';r=t.createElement(s);r.async=!0;
-    r.src=n;var u=t.getElementsByTagName(s)[0];
-    u.parentNode.insertBefore(r,u);})(window,document,
-    'https://sc-static.net/scevent.min.js');
+   <!-- Snap Pixel Code -->
+<script type="text/javascript">
+(function(e,t,n){
+    if(e.snaptr)return;
+    var a=e.snaptr=function(){
+        a.handleRequest?a.handleRequest.apply(a,arguments):a.queue.push(arguments)
+    };
+    a.queue=[];
+    var s='script';
+    var r=t.createElement(s);
+    r.async=!0;
+    r.src=n;
+    var u=t.getElementsByTagName(s)[0];
+    u.parentNode.insertBefore(r,u);
+})(window,document,'https://sc-static.net/scevent.min.js');
 
-    snaptr('init', '05a3351f-7926-4f9a-9db3-6cad3a9d12b5', {});
-    snaptr('track', 'PAGE_VIEW');
-    </script>
-    <!-- End Snap Pixel Code -->
+// تهيئة البكسل
+snaptr('init', '05a3351f-7926-4f9a-9db3-6cad3a9d12b5', {});
+
+// تسجيل مشاهدة الصفحة
+snaptr('track', 'PAGE_VIEW');
+</script>
+<!-- End Snap Pixel Code -->
 
     <!-- باقي الميتا والتايتل -->
     <meta charset="UTF-8">
@@ -839,21 +849,42 @@
                 body: new FormData(this),
             })
             .then(response => {
-                if (response.ok) {
-                    localStorage.setItem('lastPhoneNumber', phoneInputValue); // تخزين رقم الهاتف الأخير
-                    formContainer.innerHTML = `
-                        <div class="success-message">
-                            <i class="fas fa-check-circle"></i>
-                            <p>تم الطلب بنجاح</p>
-                            <h4>سوف تصلك رسالة على الواتس آب</h4>
-                        </div>
-                    `;
-                } else {
-                    phoneError.textContent = 'فشل في إرسال النموذج، حاول مرة أخرى';
-                    phoneError.style.display = 'block';
-                    console.error('فشل في إرسال النموذج:', response.statusText);
-                }
-            })
+
+    if (response.ok) {
+
+        // حساب السعر
+        var quantityInput = document.getElementById('input_25');
+        var quantity = quantityInput ? parseInt(quantityInput.value) || 1 : 1;
+        var pricePerItem = 65;
+        var totalPrice = quantity * pricePerItem;
+
+        // تسجيل عملية شراء في سناب
+        snaptr('track', 'PURCHASE', {
+            'currency': 'SAR',
+            'price': totalPrice
+        });
+
+        // حفظ رقم الهاتف
+        localStorage.setItem('lastPhoneNumber', phoneInputValue);
+
+        // عرض رسالة النجاح
+        formContainer.innerHTML = `
+            <div class="success-message">
+                <i class="fas fa-check-circle"></i>
+                <p>تم الطلب بنجاح</p>
+                <h4>سوف تصلك رسالة على الواتس آب</h4>
+            </div>
+        `;
+
+    } else {
+
+        phoneError.textContent = 'فشل في إرسال النموذج، حاول مرة أخرى';
+        phoneError.style.display = 'block';
+        console.error('فشل في إرسال النموذج:', response.statusText);
+
+    }
+
+})
             .catch(error => {
                 phoneError.textContent = 'حدث خطأ، حاول مرة أخرى';
                 phoneError.style.display = 'block';
